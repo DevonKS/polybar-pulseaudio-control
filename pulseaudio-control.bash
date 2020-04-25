@@ -19,12 +19,12 @@ SINK_ICON="# "  # Icon always shown to the left of the default sink names
 # Blacklist of PulseAudio sink names when switching between them. To obtain
 # the names of your active sinks, use `pactl list sinks short`.
 SINK_BLACKLIST=(
-    "alsa_output.usb-SinkYouDontUse-00.analog-stereo"
 )
 
 # Maps PulseAudio sink names to human-readable names
 declare -A SINK_NICKNAMES
-SINK_NICKNAMES["alsa_output.usb-SomeManufacturer_SomeUsbSoundcard-00.analog-stereo"]="External Soundcard"
+SINK_NICKNAMES["alsa_output.pci-0000_00_1f.3.analog-stereo"]="PC"
+SINK_NICKNAMES["alsa_output.pci-0000_01_00.1.hdmi-stereo"]="HDMI"
 
 
 # Environment & global constants for the script
@@ -285,11 +285,7 @@ function output() {
     getNickname "$curSink"
 
     # Showing the formatted message
-    if [ "$isMuted" = "yes" ]; then
-        echo "${MUTED_COLOR}${MUTED_ICON}${curVol}%   ${SINK_ICON}${nickname}${END_COLOR}"
-    else
-        echo "${volIcon}${curVol}%   ${SINK_ICON}${nickname}"
-    fi
+    echo "${nickname}"
 }
 
 
